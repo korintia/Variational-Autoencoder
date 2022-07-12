@@ -1,0 +1,4 @@
+outs:
+- md5: cee53cefe416d2a13838cdbcf9c92591
+  size: 47520400
+  path: training.pt

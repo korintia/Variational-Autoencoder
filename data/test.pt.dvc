@@ -1,0 +1,4 @@
+outs:
+- md5: 78af877e81fe27cf0db45b846be06c24
+  size: 7920400
+  path: test.pt
