@@ -7,7 +7,7 @@ from network import Encoder, Decoder
 from torchvision.utils import make_grid
 
 
-class VAE(pl.LightningModule):
+class AutoEncoder(pl.LightningModule):
     def __init__(self):
         super().__init__()
         kernel_size = 4  # (4, 4) kernel
@@ -20,12 +20,8 @@ class VAE(pl.LightningModule):
         self.decoder = Decoder()
 
     def forward(self, x):
-        # print()
-        # print("x", x.shape)
         z = self.encoder(x)
-        # print("z", z.shape)
         y_hat = self.decoder(z)
-        # exit()
         return y_hat
 
     def configure_optimizers(self):
