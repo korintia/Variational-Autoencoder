@@ -3,7 +3,7 @@ from torch import nn
 import torch
 from torch import optim
 import torch.nn.functional as F
-from network import Encoder, Decoder
+from ae_network import Encoder, Decoder
 from torchvision.utils import make_grid
 
 

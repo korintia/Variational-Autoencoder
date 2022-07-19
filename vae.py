@@ -3,7 +3,7 @@ from torch import nn
 import torch
 from torch import optim
 import torch.nn.functional as F
-from network import Encoder, Decoder
+from vae_network import Encoder, Decoder
 from torchvision.utils import make_grid
 
 
@@ -19,10 +19,20 @@ class VAE(pl.LightningModule):
         self.encoder = Encoder()
         self.decoder = Decoder()
 
+    def reparameterize(self, mu, logVar):
+
+        #Reparameterization takes in the input mu and logVar and sample the mu + std * eps
+        std = torch.exp(logVar/2)
+        eps = torch.randn_like(std)
+        return mu + std * eps
+
     def forward(self, x):
-        z = self.encoder(x)
-        y_hat = self.decoder(z)
-        return y_hat
+        # The entire pipeline of the VAE: encoder -> reparameterization -> decoder
+        # output, mu, and logVar are returned for loss computation
+        mu, logVar = self.encoder(x)
+        z = self.reparameterize(mu, logVar)
+        out = self.decoder(z)
+        return out
 
     def configure_optimizers(self):
         return optim.Adam(self.parameters(), lr=self.lr)
